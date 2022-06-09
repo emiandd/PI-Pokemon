@@ -37,7 +37,7 @@ async function getAllPokemons(){
 
 async function getPokemonById(id){
 
-	if(id.length > 2){
+	if(id < 1 || id > 39){
 		const pDB = await Pokemon.findByPk(id);
 		// console.log(pDB);
 		return pDB.dataValues;
@@ -67,6 +67,8 @@ async function getPokemonByName(name){
 	const url = `https://pokeapi.co/api/v2/pokemon/${name}`;
 	const p = await axios.get(url);
 
+	// console.log(p);
+
 	const dataByPokemon = {
 			id: p.data.id,
 			name: p.data.name,
@@ -80,7 +82,22 @@ async function getPokemonByName(name){
 			speed: p.data.stats[3].base_stat
 		}
 
-	return dataByPokemon;
+
+	// console.log(pDB);
+
+	if(dataByPokemon){
+		return dataByPokemon
+	}else{
+		const pDB = await Pokemon.findOne({
+			where: {
+				name: name
+			},
+			include: Type
+		})
+		return pDB;
+	}
+
+	// return dataByPokemon;
 
 }
 
@@ -106,30 +123,36 @@ async function getAllTypes(){
 async function createNewPokemon(obj){
 
 	const { name, life, attack, defense, speed, height, weight, image, types } = obj;
+	
+	await axios.get('http://localhost:3001/types');
 
 	if(!name || !life || !attack || !defense || !speed || !height || !weight || !image || !types){
 		throw 'Faltan datos para poder crear un nuevo Pokemon!';
 	}
 
 	let typesDB = types.map( type => {
-		let condition = {};
-		let where = {};
-		where.name = type;
-		condition.where = where;
-		// console.log(condition);
-		return Type.findAll(condition);
+		return Type.findAll({
+			where: {
+				name: type
+			}
+		});
 	})
 	// console.log(typesDB);
-	typesDB = await (await Promise.all(typesDB)).flat();
-	typesDB = typesDB.map( t => t.id );
-	// console.log(typesDB);
+	typesDB = await Promise.all(typesDB);
+	typesDB = await typesDB.flat();
+	// console.log(typesDB2);
+	let idTypes = typesDB.map( t => t.id );
+	// console.log(typesDB2);
+
 	let newPokemon = await Pokemon.create(obj);
 
-	newPokemon.addType(typesDB);
+	newPokemon.addType(idTypes);
 
 	return 'Nuevo Pokemon creado exitosamente!';
-
+		
 }
+
+
 
 module.exports = {
 	getAllPokemons,
