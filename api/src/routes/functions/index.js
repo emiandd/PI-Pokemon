@@ -64,40 +64,33 @@ async function getPokemonById(id){
 
 async function getPokemonByName(name){
 
-	const url = `https://pokeapi.co/api/v2/pokemon/${name}`;
-	const p = await axios.get(url);
-
-	// console.log(p);
-
-	const dataByPokemon = {
-			id: p.data.id,
-			name: p.data.name,
-			height: p.data.height,
-			weight: p.data.weight,
-			types: p.data.types.map(p => p.type.name),
-			image: p.data.sprites.other['official-artwork'].front_default,
-			life: p.data.stats[0].base_stat,
-			attack: p.data.stats[1].base_stat,
-			defense: p.data.stats[2].base_stat,
-			speed: p.data.stats[3].base_stat
-		}
-
-
-	// console.log(pDB);
-
-	if(dataByPokemon){
-		return dataByPokemon
-	}else{
-		const pDB = await Pokemon.findOne({
+	const pDB = await Pokemon.findOne({
 			where: {
 				name: name
 			},
 			include: Type
-		})
-		return pDB;
-	}
+	})
 
-	// return dataByPokemon;
+	if(!pDB){
+		const url = `https://pokeapi.co/api/v2/pokemon/${name}`;
+		const p = await axios.get(url);
+
+		const dataByPokemon = {
+				id: p.data.id,
+				name: p.data.name,
+				height: p.data.height,
+				weight: p.data.weight,
+				types: p.data.types.map(p => p.type.name),
+				image: p.data.sprites.other['official-artwork'].front_default,
+				life: p.data.stats[0].base_stat,
+				attack: p.data.stats[1].base_stat,
+				defense: p.data.stats[2].base_stat,
+				speed: p.data.stats[3].base_stat
+			}
+		return dataByPokemon;
+	}else{
+		return pDB.dataValues;
+	}
 
 }
 
@@ -123,7 +116,7 @@ async function getAllTypes(){
 async function createNewPokemon(obj){
 
 	const { name, life, attack, defense, speed, height, weight, image, types } = obj;
-	
+
 	await axios.get('http://localhost:3001/types');
 
 	if(!name || !life || !attack || !defense || !speed || !height || !weight || !image || !types){
