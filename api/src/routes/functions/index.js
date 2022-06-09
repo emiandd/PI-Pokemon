@@ -37,7 +37,7 @@ async function getAllPokemons(){
 
 async function getPokemonById(id){
 
-	if(id < 1 || id > 39){
+	if(id < 1 || id > 39 || id.length > 2){
 		const pDB = await Pokemon.findByPk(id);
 		// console.log(pDB);
 		return pDB.dataValues;
@@ -86,12 +86,11 @@ async function getPokemonByName(name){
 				attack: p.data.stats[1].base_stat,
 				defense: p.data.stats[2].base_stat,
 				speed: p.data.stats[3].base_stat
-			}
+		}
 		return dataByPokemon;
-	}else{
-		return pDB.dataValues;
 	}
 
+	return pDB.dataValues;
 }
 
 async function getAllTypes(){

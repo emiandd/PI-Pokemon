@@ -11,7 +11,7 @@ router.get('/pokemons/:id', async (req, res) => {
 		res.send(await model.getPokemonById(id));	
 	} catch(e) {
 		// statements
-		res.status(404).send(e);
+		res.status(404).json({error:'El pokemon que intentas buscar no existe'});
 	}
 
 })
