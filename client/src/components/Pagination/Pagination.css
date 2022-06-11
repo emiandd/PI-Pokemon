@@ -1,0 +1,46 @@
+.pagination-container{
+	display: flex;
+	justify-content: center;
+	padding-bottom: 5rem;
+	box-shadow: 0 0 4rem -1rem;
+}
+
+.pagination{
+	display: flex;
+	justify-content: space-around;
+	width: 15rem;
+}
+
+li{
+	list-style: none;
+}
+
+li button{
+	height: 3rem;
+	width: 3rem;
+	font-size: 1.4rem;
+	border: .1rem solid red;
+	background-color: red;
+	color: white;
+	cursor: pointer;
+	transition: all .2s ease;
+	border-radius: .5rem;
+}
+
+li button:hover{
+	background-color: #9d0208;
+	scale: 115%;
+}
+
+.number{
+
+}
+
+.activePage{
+	background-color: white;
+	color: black;
+}
+
+.normalPage{
+
+}
