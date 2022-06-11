@@ -13,6 +13,7 @@ async function getAllPokemons(){
 	// console.log(result);
 	const dataByPokemon = result.map( p => {
 		let pokemon = {
+			id: p.data.id,
 			name: p.data.name,
 			types: p.data.types.map(p => p.type.name),
 			image: p.data.sprites.other['official-artwork'].front_default
@@ -25,6 +26,7 @@ async function getAllPokemons(){
 	const dataPokemonDB = resDB.map( p => {
 		// console.log(p.dataValues.types[0].name);
 		let pokemonDB = {
+			id: p.dataValues.id,
 			name: p.dataValues.name,
 			types: p.dataValues.types.map(p => p.name),
 			image: p.dataValues.image
