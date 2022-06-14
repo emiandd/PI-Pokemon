@@ -39,7 +39,7 @@ async function getAllPokemons(){
 
 async function getPokemonById(id){
 
-	if(id < 1 || id > 39 || id.length > 2){
+	if(id < 1 || id > 50 || id.length > 2){
 		const pDB = await Pokemon.findByPk(id);
 		// console.log(pDB);
 		return pDB.dataValues;
