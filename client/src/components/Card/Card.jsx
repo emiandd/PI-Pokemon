@@ -9,7 +9,7 @@ export default function Card(props) {
 			</div>
 			<h3 className='name'>{props.name}</h3>
 			<div className='types-container'>
-			{props.types.map(t => (
+			{props.types?.map(t => (
 				<div className='type-bg'>
 					<p className='type-text'>{t}</p>
 				</div>
