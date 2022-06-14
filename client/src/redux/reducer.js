@@ -4,7 +4,8 @@ import { GET_ALL_POKEMONS,
 		 GET_ALL_TYPES,
 		 FILTERED_BY_TYPE,
 		 FILTERED_BY_DB_OR_API,
-		 SORT_BY_ATTACK } from './actions.js';
+		 SORT_BY_ATTACK,
+		 SORT_BY_NAME } from './actions.js';
 
 const initialState = {
 	allPokemons: [],
@@ -61,6 +62,12 @@ export default function reducer(state = initialState, action){
 			}
 
 		case SORT_BY_ATTACK:
+			return{
+				...state,
+				allPokemons: action.payload
+			}
+
+		case SORT_BY_NAME:
 			return{
 				...state,
 				allPokemons: action.payload

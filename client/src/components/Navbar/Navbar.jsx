@@ -7,7 +7,8 @@ import { getAllPokemons,
 		 getTypes,
 		 filteredByType, 
 		 filteredByDBorAPI,
-		 sortByAttack } from '../../redux/actions.js';
+		 sortByAttack,
+		 sortByName } from '../../redux/actions.js';
 
 export default function Navbar({setCurrentPage}) {
 
@@ -43,6 +44,12 @@ export default function Navbar({setCurrentPage}) {
 		setCurrentPage(1);
 	}
 
+	function handleSortByName(e){
+		console.log(e.target.value)
+		dispatch(sortByName(e.target.value))
+		setCurrentPage(1);
+	}
+
 	let actualURL = window.location.href;
 
 	return (
@@ -63,28 +70,28 @@ export default function Navbar({setCurrentPage}) {
 			
 			<div className={actualURL.includes('detail') ? 'displayNone' : 'bottom-nav'}>
 				<div>
-					<select onChange={ (e) => handleChangeSelectByType(e) } name="types" id="1">
+					<select onChange={ (e) => handleChangeSelectByType(e) } name="filterType" id="1">
 						<option value="All">-- All --</option>
 						{pokemonTypes?.map( t => 
 							<option value={t.name}>{t.name}</option>
 						)}
 					</select>
-					<select onChange={ (e) => handleFilteredByDBorAPI(e) }  name="pokemons" id="1">
+					<select onChange={ (e) => handleFilteredByDBorAPI(e) }  name="filterDBorAPI" id="1">
 						<option value="All">-- All --</option>
 						<option value="originals">Originals</option>
 						<option value="created">Created By Me</option>
 					</select>
 				</div>
 				<div className='ordering'>
-					<select onChange={ (e) => handleSortByAttack(e) } name="order by" id="1">
+					<select onChange={ (e) => handleSortByAttack(e) } name="sortAttack" id="1">
 						<option value="unordered">-- Unordered --</option>
 						<option value="ascending">Ascending</option>
 						<option value="descending">Descending</option>
 					</select>
-					<select name="pokemons" id="1">
+					<select onChange={ (e) => handleSortByName(e) } name="sortName" id="1">
 						<option value="unordered">-- Unordered --</option>
-						<option value="ascending">Ascending</option>
-						<option value="descending">Descending</option>
+						<option value="ascending">A-Z</option>
+						<option value="descending">Z-A</option>
 					</select>
 				</div>
 			</div>

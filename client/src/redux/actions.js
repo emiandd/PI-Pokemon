@@ -5,6 +5,7 @@ export const GET_ALL_TYPES = 'GET_ALL_TYPES';
 export const FILTERED_BY_TYPE = 'FILTERED_BY_TYPE';
 export const FILTERED_BY_DB_OR_API = 'FILTERED_BY_DB_OR_API';
 export const SORT_BY_ATTACK = 'SORT_BY_ATTACK';
+export const SORT_BY_NAME = 'SORT_BY_NAME';
 
 
 export function getAllPokemons(){
@@ -120,10 +121,59 @@ export function sortByAttack(value){
 					// console.log(pokemonSortAscending);
 				}else if (value === 'descending'){
 					// console.log('ordenando descendentemente');
-					let pokemonSortAscending = data.sort((a,b) => (b.attack - a.attack));
-					dispatch({type: SORT_BY_ATTACK, payload: pokemonSortAscending })
+					let pokemonSortDescending = data.sort((a,b) => (b.attack - a.attack));
+					dispatch({type: SORT_BY_ATTACK, payload: pokemonSortDescending })
 					// console.log(pokemonSortAscending);
 				}
+
+			})
+
+	}
+
+}
+
+export function sortByName(value){
+
+	const url = `http://localhost:3001/pokemons`;
+
+	return async function(dispatch){
+
+		return await fetch(url)
+			.then( response =>  response.json() )
+			.then( data =>  {
+
+				if(value === 'unordered'){
+					dispatch({type: SORT_BY_NAME, payload: data })
+				}else if(value === 'ascending'){
+					console.log('ordenando ascendentemente de la A a la Z');
+					let pokemonSortAscending = data.sort((a,b) => {
+
+						if(a.name.toLowerCase() === b.name.toLowerCase()){
+							return 0;
+						}else if(a.name.toLowerCase() > b.name.toLowerCase()){
+							return 1;
+						}
+						return -1;
+					});
+					// console.log(pokemonSortAscending);
+					dispatch({type: SORT_BY_NAME, payload: pokemonSortAscending })
+				}else if(value === 'descending'){
+					console.log('ordenando descendentemente de la Z a la A');
+					let pokemonSortDescending = data.sort((a,b) => {
+
+						if(b.name.toLowerCase() === a.name.toLowerCase()){
+							return 0;
+						}else if(b.name.toLowerCase() > a.name.toLowerCase()){
+							return 1;
+						}
+						return -1
+
+					})
+					// console.log(pokemonSortDescending);
+					dispatch({type: SORT_BY_NAME, payload: pokemonSortDescending })
+				}
+
+
 
 			})
 
