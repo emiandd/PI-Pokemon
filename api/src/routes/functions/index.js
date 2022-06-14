@@ -16,6 +16,7 @@ async function getAllPokemons(){
 			id: p.data.id,
 			name: p.data.name,
 			types: p.data.types.map(p => p.type.name),
+			attack: p.data.stats[1].base_stat,
 			image: p.data.sprites.other['official-artwork'].front_default
 		}
 		return pokemon;
@@ -29,6 +30,7 @@ async function getAllPokemons(){
 			id: p.dataValues.id,
 			name: p.dataValues.name,
 			types: p.dataValues.types.map(p => p.name),
+			attack: p.dataValues.attack,
 			image: p.dataValues.image
 		}
 		return pokemonDB;
