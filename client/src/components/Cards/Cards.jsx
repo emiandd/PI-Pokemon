@@ -2,24 +2,27 @@ import Card from '../Card/Card.jsx';
 import React, { Component } from 'react';
 import { getAllPokemons } from '../../redux/actions.js';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styles from './Cards.css';
 
 class Cards extends Component {
 
 	componentDidMount(){
 		this.props.getAllPokemons();
-		console.log(this.props.currentPokemons)
+		// console.log(this.props.currentPokemons);
 	}
 
 	render() {
 		return (
 			<div className='cards-container'>
-				{this.props.currentPokemons.map( p => (
-					<Card
-						image={p.image}
-						name={p.name}
-						types={p.types}
-					/>
+				{this.props.currentPokemons?.map( p => (
+					<Link className="link-styles" to={`/detail/${p.id}`}>
+						<Card
+							image={p.image}
+							name={p.name}
+							types={p.types}
+						/>
+					</Link>
 				))}
 			</div>
 		)
