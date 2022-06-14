@@ -3,7 +3,8 @@ import { GET_ALL_POKEMONS,
 		 GET_POKEMON_BY_NAME,
 		 GET_ALL_TYPES,
 		 FILTERED_BY_TYPE,
-		 FILTERED_BY_DB_OR_API } from './actions.js';
+		 FILTERED_BY_DB_OR_API,
+		 SORT_BY_ATTACK } from './actions.js';
 
 const initialState = {
 	allPokemons: [],
@@ -54,6 +55,12 @@ export default function reducer(state = initialState, action){
 				alert('No se encontraron resultados');
 				return state;
 			}
+			return{
+				...state,
+				allPokemons: action.payload
+			}
+
+		case SORT_BY_ATTACK:
 			return{
 				...state,
 				allPokemons: action.payload

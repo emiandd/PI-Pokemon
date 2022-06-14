@@ -4,6 +4,7 @@ export const GET_POKEMON_BY_NAME = 'GET_POKEMON_BY_NAME';
 export const GET_ALL_TYPES = 'GET_ALL_TYPES';
 export const FILTERED_BY_TYPE = 'FILTERED_BY_TYPE';
 export const FILTERED_BY_DB_OR_API = 'FILTERED_BY_DB_OR_API';
+export const SORT_BY_ATTACK = 'SORT_BY_ATTACK';
 
 
 export function getAllPokemons(){
@@ -89,14 +90,43 @@ export function filteredByDBorAPI(value){
 			.then( data =>  {
 				if(value === 'created' || value === 'All'){
 					let filteredPokemons = data.filter( p => p.id.toString().length > 30 );
-					console.log(filteredPokemons);
+					// console.log(filteredPokemons);
 					dispatch({type: FILTERED_BY_DB_OR_API, payload: value === 'All' ? data : filteredPokemons })
 				}else if(value === 'originals' || value === 'All'){
 					let filteredPokemons = data.filter( p => p.id.toString().length < 30 );
-					console.log(filteredPokemons);
+					// console.log(filteredPokemons);
 					dispatch({type: FILTERED_BY_DB_OR_API, payload: filteredPokemons })
 				}
 			})
 	}
 }
 
+export function sortByAttack(value){
+
+	const url = `http://localhost:3001/pokemons`;
+
+	return async function(dispatch){
+
+		return await fetch(url)
+			.then( response =>  response.json() )
+			.then( data =>  {
+
+				if(value === 'unordered'){
+					dispatch({type: SORT_BY_ATTACK, payload: data })
+				}else if(value === 'ascending'){
+					// console.log('ordenando ascendentemente');
+					let pokemonSortAscending = data.sort((a,b) => (a.attack - b.attack));
+					dispatch({type: SORT_BY_ATTACK, payload: pokemonSortAscending })
+					// console.log(pokemonSortAscending);
+				}else if (value === 'descending'){
+					// console.log('ordenando descendentemente');
+					let pokemonSortAscending = data.sort((a,b) => (b.attack - a.attack));
+					dispatch({type: SORT_BY_ATTACK, payload: pokemonSortAscending })
+					// console.log(pokemonSortAscending);
+				}
+
+			})
+
+	}
+
+}

@@ -3,7 +3,11 @@ import styles from './Navbar.css';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllPokemons, getTypes, filteredByType, filteredByDBorAPI } from '../../redux/actions.js';
+import { getAllPokemons,
+		 getTypes,
+		 filteredByType, 
+		 filteredByDBorAPI,
+		 sortByAttack } from '../../redux/actions.js';
 
 export default function Navbar({setCurrentPage}) {
 
@@ -28,8 +32,14 @@ export default function Navbar({setCurrentPage}) {
 	}
 
 	function handleFilteredByDBorAPI(e){
-		console.log(e.target.value)
+		// console.log(e.target.value)
 		dispatch(filteredByDBorAPI(e.target.value));
+		setCurrentPage(1);
+	}
+
+	function handleSortByAttack(e){
+		console.log(e.target.value)
+		dispatch(sortByAttack(e.target.value));
 		setCurrentPage(1);
 	}
 
@@ -53,7 +63,7 @@ export default function Navbar({setCurrentPage}) {
 			
 			<div className={actualURL.includes('detail') ? 'displayNone' : 'bottom-nav'}>
 				<div>
-					<select onChange={(e) => handleChangeSelectByType(e)} name="types" id="1">
+					<select onChange={ (e) => handleChangeSelectByType(e) } name="types" id="1">
 						<option value="All">-- All --</option>
 						{pokemonTypes?.map( t => 
 							<option value={t.name}>{t.name}</option>
@@ -66,15 +76,15 @@ export default function Navbar({setCurrentPage}) {
 					</select>
 				</div>
 				<div className='ordering'>
-					<select name="order by" id="1">
-						<option value="types">-</option>
-						<option value="ground">Ascending</option>
-						<option value="electric">Descending</option>
+					<select onChange={ (e) => handleSortByAttack(e) } name="order by" id="1">
+						<option value="unordered">-- Unordered --</option>
+						<option value="ascending">Ascending</option>
+						<option value="descending">Descending</option>
 					</select>
 					<select name="pokemons" id="1">
-						<option value="name-attack">-</option>
-						<option value="name">Name</option>
-						<option value="attack">Attack</option>
+						<option value="unordered">-- Unordered --</option>
+						<option value="ascending">Ascending</option>
+						<option value="descending">Descending</option>
 					</select>
 				</div>
 			</div>
