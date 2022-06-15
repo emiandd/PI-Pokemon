@@ -42,7 +42,7 @@ async function getAllPokemons(){
 async function getPokemonById(id){
 
 	if(id < 1 || id > 50 || id.length > 2){
-		const pDB = await Pokemon.findByPk(id);
+		const pDB = await Pokemon.findByPk(id, {include:Type});
 		// console.log(pDB);
 		return pDB.dataValues;
 	}
@@ -55,7 +55,7 @@ async function getPokemonById(id){
 			name: p.data.name,
 			height: p.data.height,
 			weight: p.data.weight,
-			types: p.data.types.map(p => p.type.name),
+			types: p.data.types.map(p => p.type),
 			image: p.data.sprites.other['official-artwork'].front_default,
 			life: p.data.stats[0].base_stat,
 			attack: p.data.stats[1].base_stat,
