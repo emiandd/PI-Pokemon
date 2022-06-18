@@ -1,0 +1,32 @@
+.inputSearch{
+	border-radius: 3rem;
+	padding: .8rem 1rem;
+	font-size: .9rem;
+	outline: none;
+	background-color: black;
+	color: white;
+	border: none;
+	font-weight: bold;
+	width: 20rem;
+}
+
+.inputSearch:focus{
+	outline: 2px solid white;
+}
+
+.btnSearch{
+	font-size: 1rem;
+	border: none;
+	padding: .6rem 1.5rem;
+	border-radius: 3rem;
+	margin-left: 1rem;
+	background-color: black;
+	color: white;
+	transition: all .3s ease;
+}
+
+.btnSearch:hover{
+	background-color: white;
+	color: red;
+	cursor: pointer;
+}
