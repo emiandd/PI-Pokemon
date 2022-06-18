@@ -5,13 +5,19 @@ import { GET_ALL_POKEMONS,
 		 FILTERED_BY_TYPE,
 		 FILTERED_BY_DB_OR_API,
 		 SORT_BY_ATTACK,
-		 SORT_BY_NAME } from './actions.js';
+		 SORT_BY_NAME,
+		 CREATE_NEW_POKEMON,
+		 RESET_DETAIL,
+		 RESET_CARDS,
+		 LOADER } from './actions.js';
 
 const initialState = {
 	allPokemons: [],
 	pokemonDetail: {},
 	pokemonByName: {},
-	allTypes: []
+	allTypes: [],
+	newPokemon: {},
+	loader: false,
 }
 
 export default function reducer(state = initialState, action){
@@ -30,6 +36,10 @@ export default function reducer(state = initialState, action){
 			}
 
 		case GET_POKEMON_BY_NAME:
+			if(action.payload.error){
+				alert(action.payload.error);
+				return state;
+			}
 			return{
 				...state,
 				allPokemons: action.payload
@@ -71,6 +81,30 @@ export default function reducer(state = initialState, action){
 			return{
 				...state,
 				allPokemons: action.payload
+			}
+
+		case CREATE_NEW_POKEMON:
+			return{
+				...state,
+				newPokemon: action.payload
+			}
+
+		case RESET_DETAIL:
+			return{
+				...state,
+				pokemonDetail: action.payload
+			}
+
+		case RESET_CARDS:
+			return{
+				...state,
+				allPokemons: action.payload
+			}
+
+		case LOADER:
+			return{
+				...state,
+				loader: action.payload
 			}
 
 		default:
