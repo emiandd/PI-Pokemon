@@ -6,18 +6,22 @@ export const FILTERED_BY_TYPE = 'FILTERED_BY_TYPE';
 export const FILTERED_BY_DB_OR_API = 'FILTERED_BY_DB_OR_API';
 export const SORT_BY_ATTACK = 'SORT_BY_ATTACK';
 export const SORT_BY_NAME = 'SORT_BY_NAME';
-
+export const CREATE_NEW_POKEMON = 'CREATE_NEW_POKEMON';
+export const RESET_DETAIL = 'RESET_DETAIL';
+export const RESET_CARDS = 'RESET_CARDS';
+export const LOADER = 'LOADER';
 
 export function getAllPokemons(){
 
 	const url = 'http://localhost:3001/pokemons';
 
 	return async function(dispatch){
-
+		dispatch({type: LOADER, payload: true})
 		return await fetch(url)
 			.then( response => response.json() )
 			.then( data =>  {
 				dispatch({type: GET_ALL_POKEMONS, payload: data})
+				dispatch({type: LOADER, payload: false})
 			})
 	}
 }
@@ -27,11 +31,12 @@ export function getDetailPokemon(id){
 	const url = `http://localhost:3001/pokemons/${id}`;
 
 	return async function(dispatch){
-
+		dispatch({type: LOADER, payload: true})
 		return await fetch(url)
 			.then( response => response.json() )
 			.then( data =>  {
 				dispatch({type: GET_DETAIL_POKEMON, payload: data})
+				dispatch({type: LOADER, payload: false})
 			})
 	}
 }
@@ -73,8 +78,8 @@ export function filteredByType(type){
 		return await fetch(url)
 			.then( response => response.json() )
 			.then( data =>  {
-				const filteredPokemons = data.filter( p => p.types.filter( t => t === type ).length );
-				console.log(filteredPokemons.map( p => p.types));
+				const filteredPokemons = data.filter( p => p.types.filter( t => t.name === type ).length );
+				// console.log(filteredPokemons.map( p => p.types));
 				dispatch({type: FILTERED_BY_TYPE, payload: type === 'All' ? data : filteredPokemons })
 			})
 	}
@@ -93,7 +98,7 @@ export function filteredByDBorAPI(value){
 					let filteredPokemons = data.filter( p => p.id.toString().length > 30 );
 					// console.log(filteredPokemons);
 					dispatch({type: FILTERED_BY_DB_OR_API, payload: value === 'All' ? data : filteredPokemons })
-				}else if(value === 'originals' || value === 'All'){
+				}else if(value === 'originals'){
 					let filteredPokemons = data.filter( p => p.id.toString().length < 30 );
 					// console.log(filteredPokemons);
 					dispatch({type: FILTERED_BY_DB_OR_API, payload: filteredPokemons })
@@ -172,11 +177,37 @@ export function sortByName(value){
 					// console.log(pokemonSortDescending);
 					dispatch({type: SORT_BY_NAME, payload: pokemonSortDescending })
 				}
+			})
+	}
 
+}
 
+export function createNewPokemon(obj){
+	console.log('creando nuevo pokemon');
+	const url = `http://localhost:3001/pokemons`;
+	const options = {
+		method: 'POST',
+		headers: {'Content-Type' : 'Application/json'},
+		body: JSON.stringify(obj)
+	}
 
+	return async function(dispatch){
+
+		return await fetch(url, options)
+			.then( response => response.json() )
+			.then( data => {
+				console.log(data);
+				dispatch({type: CREATE_NEW_POKEMON, payload: data })
 			})
 
 	}
 
+}
+
+export function resetDetail(){
+	return { type: RESET_DETAIL, payload: {} }
+}
+
+export function resetCards(){
+	return { type: RESET_CARDS, payload: [] }
 }
