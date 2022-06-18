@@ -1,0 +1,72 @@
+.navbar{
+	display: flex;
+	flex-direction: column;
+	background-color: red;
+}
+
+.topNav{
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding: .8rem 0;
+}
+
+.homeLink{
+	text-decoration: none;
+}
+
+.homeLink h1{
+	color: white;
+	font-size: 2rem;
+	margin: 0;
+}
+
+.topNav button{
+	border: none;
+	background-color: black;
+	padding: .7rem 1.5rem;
+	color: white;
+	font-size: 1rem;
+	border-radius: 3rem;
+	transition: all .3s ease;
+}
+
+.topNav button:hover{
+	background-color: white;
+	color: red;
+	cursor: pointer;
+}
+
+.bottomNav{
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	padding: .7rem 8rem;
+	background-color: black;
+	color: white;
+	box-shadow: 0 1rem 2rem -1rem black; 
+}
+
+.bottomNav p{
+	margin: 0;
+	margin-right: 5.2rem;
+}
+
+#filterDBorAPIText{
+	margin-right: 0;
+}
+
+select{
+	margin-top: .2rem;
+	width: 10.2rem;
+	padding: .3rem .2rem;
+	border: none;
+	color: gray;
+	background-color: black;
+	border: .1rem solid gray;
+	border-radius: 1rem;
+}
+
+.displayNone{
+	display: none;
+}
