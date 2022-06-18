@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import styles from './Navbar.css';
+import s from './Navbar.module.css';
 import SearchBar from '../SearchBar/SearchBar.jsx';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,8 +14,6 @@ export default function Navbar({setCurrentPage}) {
 
 	const dispatch = useDispatch();
 	const pokemonTypes = useSelector( state => state.allTypes);
-
-	// console.log(pokemonTypes.map( t => t.name ));
 
 	useEffect( () =>  {
 		dispatch(getTypes())
@@ -39,13 +37,13 @@ export default function Navbar({setCurrentPage}) {
 	}
 
 	function handleSortByAttack(e){
-		console.log(e.target.value)
+		// console.log(e.target.value)
 		dispatch(sortByAttack(e.target.value));
 		setCurrentPage(1);
 	}
 
 	function handleSortByName(e){
-		console.log(e.target.value)
+		// console.log(e.target.value)
 		dispatch(sortByName(e.target.value))
 		setCurrentPage(1);
 	}
@@ -53,29 +51,35 @@ export default function Navbar({setCurrentPage}) {
 	let actualURL = window.location.href;
 
 	return (
-		<nav className='navbar'>
-			<div className='top-nav'>
-				<div className='logotipo'>
-				    <Link to='/home' onClick={(e) => clickHome(e)}>
+		<nav className={s.navbar}>
+			<div className={s.topNav}>
+				<div className={s.logotipo}>
+				    <Link to='/home' onClick={(e) => clickHome(e) } className={s.homeLink}>
 						<h1>Poke App</h1>
 					</Link>
 				</div>	
-				<div className={actualURL.includes('detail') ? 'displayNone' : 'search'}>
+				<div className={actualURL.includes('detail') || actualURL.includes('createpokemon') ? s.displayNone : s.search}>
 					<SearchBar />
 				</div>
 				<div>
-					<button>Create a Pokemon!</button>
+					<Link to='/createpokemon' >
+						<button >Create a Pokemon!</button>
+					</Link>
 				</div>
 			</div>
 			
-			<div className={actualURL.includes('detail') ? 'displayNone' : 'bottom-nav'}>
+			<div className={actualURL.includes('detail') || actualURL.includes('createpokemon') ? s.displayNone : s.bottomNav }>
 				<div>
+					<p>Filter By Type</p>
 					<select onChange={ (e) => handleChangeSelectByType(e) } name="filterType" id="1">
 						<option value="All">-- All --</option>
 						{pokemonTypes?.map( t => 
 							<option value={t.name}>{t.name}</option>
 						)}
 					</select>
+				</div>
+				<div>
+					<p id={s.filterDBorAPIText}>Filter By Originals or Created</p>
 					<select onChange={ (e) => handleFilteredByDBorAPI(e) }  name="filterDBorAPI" id="1">
 						<option value="All">-- All --</option>
 						<option value="originals">Originals</option>
@@ -83,11 +87,15 @@ export default function Navbar({setCurrentPage}) {
 					</select>
 				</div>
 				<div className='ordering'>
+					<p>Sort By Attack</p>
 					<select onChange={ (e) => handleSortByAttack(e) } name="sortAttack" id="1">
 						<option value="unordered">-- Unordered --</option>
 						<option value="ascending">Ascending</option>
 						<option value="descending">Descending</option>
 					</select>
+				</div>
+				<div>
+					<p>Sort By Name</p>
 					<select onChange={ (e) => handleSortByName(e) } name="sortName" id="1">
 						<option value="unordered">-- Unordered --</option>
 						<option value="ascending">A-Z</option>
