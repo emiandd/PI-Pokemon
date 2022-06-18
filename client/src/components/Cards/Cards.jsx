@@ -1,39 +1,45 @@
 import Card from '../Card/Card.jsx';
-import React, { Component } from 'react';
-import { getAllPokemons } from '../../redux/actions.js';
-import { connect } from 'react-redux';
+import React, { Component, useEffect } from 'react';
+import { getAllPokemons, resetCards } from '../../redux/actions.js';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import styles from './Cards.css';
+import Loader from '../Loader/Loader.jsx'
+import s from './Cards.module.css';
 
-class Cards extends Component {
 
-	componentDidMount(){
-		this.props.getAllPokemons();
-		// console.log(this.props.currentPokemons);
-	}
+export default function Cards({currentPokemons}) {
 
-	render() {
-		return (
-			<div className='cards-container'>
-				{this.props.currentPokemons?.map( p => (
-					<Link className="link-styles" to={`/detail/${p.id}`}>
-						<Card
-							image={p.image}
-							name={p.name}
-							types={p.types}
-						/>
-					</Link>
-				))}
-			</div>
-		)
-	}
+	const dispatch = useDispatch();
+	const allPokemons = useSelector( state => state.allPokemons );
+	const loader = useSelector( state => state.loader );
+
+	useEffect( () => {
+
+		if(!loader){
+			dispatch(getAllPokemons())
+		}
+
+		return () => {
+			dispatch(resetCards());
+		}
+
+	},[])
+
+	return (
+		<div className={s.cardsContainer}>
+				
+ 			{ loader ? <Loader /> 
+ 			: currentPokemons.map( p => (
+				<Link className={s.linkStyles} to={`/detail/${p.id}`}>
+ 					<Card
+						image={p.image}
+						name={p.name}
+ 						types={p.types}
+					/>
+				</Link>
+			))}
+		</div>
+	)
 }
 
-function mapStateToProps(state){
-	return{
-		allPokemons: state.allPokemons
-	}
-}
 
-
-export default connect(mapStateToProps, {getAllPokemons})(Cards)
