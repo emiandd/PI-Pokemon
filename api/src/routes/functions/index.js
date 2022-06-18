@@ -12,24 +12,26 @@ async function getAllPokemons(){
 	const result = await Promise.all(subRequest);
 	// console.log(result);
 	const dataByPokemon = result.map( p => {
+		// console.log(p.data);
 		let pokemon = {
 			id: p.data.id,
 			name: p.data.name,
-			types: p.data.types.map(p => p.type.name),
+			types: p.data.types.map( types => types.type),
 			attack: p.data.stats[1].base_stat,
 			image: p.data.sprites.other['official-artwork'].front_default
 		}
+
 		return pokemon;
 	})
 	
 	const resDB = await Pokemon.findAll({include:Type});
 
 	const dataPokemonDB = resDB.map( p => {
-		// console.log(p.dataValues.types[0].name);
+		// console.log(p.dataValues);
 		let pokemonDB = {
 			id: p.dataValues.id,
 			name: p.dataValues.name,
-			types: p.dataValues.types.map(p => p.name),
+			types: p.dataValues.types,
 			attack: p.dataValues.attack,
 			image: p.dataValues.image
 		}
@@ -84,7 +86,7 @@ async function getPokemonByName(name){
 				name: p.data.name,
 				height: p.data.height,
 				weight: p.data.weight,
-				types: p.data.types.map(p => p.type.name),
+				types: p.data.types.map(p => p.type),
 				image: p.data.sprites.other['official-artwork'].front_default,
 				life: p.data.stats[0].base_stat,
 				attack: p.data.stats[1].base_stat,
