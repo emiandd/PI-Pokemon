@@ -1,0 +1,12 @@
+.cardsContainer{
+	display: flex;
+	flex-wrap: wrap;
+	padding: 4rem 0;
+	justify-content: space-around;
+	padding: 4rem 5rem;
+}
+
+.linkStyles{
+	text-decoration: none;
+	color: black;
+}
