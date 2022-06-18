@@ -18,6 +18,10 @@
 	left: 2rem;
 }
 
+.detailLeft img{
+	height: 30rem;
+}
+
 .detailRight{
 	/* border: .1rem solid black; */
 	/* margin: auto 0; */
