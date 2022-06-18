@@ -15,6 +15,9 @@ module.exports = (sequelize) => {
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+      set(value){
+        this.setDataValue('name', value.toLowerCase())
+      }
     },
 
     life: {
