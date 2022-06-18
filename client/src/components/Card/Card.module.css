@@ -32,8 +32,9 @@ body{
 	background-color: gray;
 }
 
-img{
+.imgContainer img{
 	width: 100%;
+	height: 17rem;
 }
 
 .name{
