@@ -1,0 +1,149 @@
+body{
+	background-color: gray;
+}
+
+.card{
+	width: 20rem;
+	height: 27rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0 2rem;
+	margin-bottom: 5rem;
+	padding-top: 1rem;
+	border-radius: 1rem;
+	transition: all .3s ease;
+	box-shadow: 0 0 1rem -.5rem;
+	border: .1rem solid #E1E1E1;
+	background-color: #E1E1E1;
+}
+
+.card:hover{
+	cursor: pointer;
+	scale: 102%;
+	box-shadow: 0 0 4rem -2rem;
+}
+
+.imgContainer{
+	width: 85%;
+	border: .1rem solid red;
+	border-radius: 100%;
+	box-shadow: 0 0 2rem -1rem;
+	background-color: gray;
+}
+
+img{
+	width: 100%;
+}
+
+.name{
+	font-size: 1.8rem;
+	width: 100%;
+	background-color: gray;
+	border-top: .1rem solid gray;
+	color: white;
+}
+
+.typesContainer{
+	display: flex;
+
+}
+
+.typeBg{
+	width: 5rem;
+	margin-right: 1rem;
+	padding: .1rem 1rem;
+	border-radius: .2rem;
+	color: white;
+}
+
+.typeBg[id="normal"]{
+	background-color: gray;
+}
+
+.typeBg[id="flying"]{
+	background-color: ;
+	background-image: linear-gradient(180deg, #3DC7EF, #BDB9B8);
+}
+
+.typeBg[id="fighting"]{
+	background-color: #D56723;
+}
+
+.typeBg[id="poison"]{
+	background-color: #B97FC9;
+}
+
+.typeBg[id="ground"]{
+	background-color: brown;
+}
+
+.typeBg[id="rock"]{
+	background-color: #A38C21;
+}
+
+.typeBg[id="bug"]{
+	background-color: #729F3F;
+}
+
+.typeBg[id="ghost"]{
+	background-color: #7B62A3;
+}
+
+.typeBg[id="steel"]{
+	background-color: #9EB7B8;
+}
+
+.typeBg[id="fire"]{
+	background-color: #FD7D24;
+}
+
+.typeBg[id="water"]{
+	background-color: #4592C4;
+}
+
+.typeBg[id="grass"]{
+	background-color: #9BCC50;
+}
+
+.typeBg[id="ice"]{
+	background-color: #51C4E7;
+}
+
+.typeBg[id="electric"]{
+	background-color: #EED535;
+	color: black;
+}
+
+.typeBg[id="psychic"]{
+	background-color: #F366B9;
+}
+
+.typeBg[id="dragon"]{
+	background-image: linear-gradient(180deg, #53A4CF, #F16E57);
+}
+
+.typeBg[id="dark"]{
+	background-color: #707070;
+}
+
+.typeBg[id="fairy"]{
+	background-color: #FDB9E9;
+	color: black;
+}
+
+.typeBg[id="shadow"]{
+	background-color: #343435;
+}
+
+.typeBg[id="unknown"]{
+	background-color: gray;
+}
+
+.typeBg:last-child{
+	margin-right: 0;
+}
+
+.typeText{
+	margin: 0;
+}
