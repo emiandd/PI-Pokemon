@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar/Navbar.jsx';
+import Card from '../Card/Card.jsx';
 import { useSelector, useDispatch } from 'react-redux';
-import { createNewPokemon, getTypes } from '../../redux/actions.js';
+import { createNewPokemon, getTypes, resetForm } from '../../redux/actions.js';
 import s from './Form.module.css';
+
 
 
 function validation(input){
@@ -77,7 +79,7 @@ function validation(input){
 	}
 
 	if(input.types.length === 0){
-		error.types = 'Select at least one type';
+		error.types = 'Select at least one type. Max 4';
 	}
 
 	return error;
@@ -96,12 +98,12 @@ export default function Form() {
 	const [error, setError]	= useState({})
 	const [input, setInput] = useState({
 		name: '',
-		life: 1,
-		speed: 1,
-		attack: 1,
-		height: 1,
-		defense: 1,
-		weight: 1,
+		life: 0,
+		speed: 0,
+		attack: 0,
+		height: 0,
+		defense: 0,
+		weight: 0,
 		image: '',
 		types: []
 	});
@@ -120,7 +122,11 @@ export default function Form() {
 		}else{
 			setCreateBtn(false)
 		}
-	},);
+
+		return () => {
+			dispatch(resetForm());
+		}
+	},[error, input]);
 
 	// console.log(input);
 	
@@ -151,7 +157,31 @@ export default function Form() {
 		// console.log('enviando información');
 		e.preventDefault()
 		dispatch(createNewPokemon(input))
+		setInput({
+			name: '',
+			life: 0,
+			speed: 0,
+			attack: 0,
+			height: 0,
+			defense: 0,
+			weight: 0,
+			image: '',
+			types: []
+		})
 	}
+
+	function showTypesPreview(){
+
+		let typeObject = input.types.map( t => {
+			let obj = {
+				name: t
+			}
+			return obj;
+		})
+		return typeObject;
+	}
+
+	// console.log(showTypesPreview());
 
 	return (
 		<div>
@@ -159,108 +189,117 @@ export default function Form() {
 			<div>
 				<form onSubmit={ (e) => handleSubmit(e)}>
 					<div className={s.inputs}>
-						<div className={s.notification}>
-							{ Object.keys(msgPokemonCreated).length === 0 ? null : msgPokemonCreated.toString() }
+						
+						<div>
+							<label className={error.image && s.errorLabel} htmlFor="" >Image: </label>
+							<input onChange={handleInputChange}
+							 				value={input.image}
+							 			  type="text"
+							 			  placeholder='http://yourimage.com/image.jpg or png'
+							 			  name='image'
+							 			  className={error.image && s.error}
+							/>
+							{error.image && <p className={s.errorLabel}>{error.image}</p>}
 						</div>
-						<label className={error.name && s.errorLabel} htmlFor="" >Name: </label>
-						<input onChange={handleInputChange}
-									 value={input.name} 
-									 type="text" 
-									 placeholder='Name your Pokemon'
-									 name='name'
-									 className={error.name && s.error}
-						/>
-						{error.name && <p className={s.errorLabel}>{error.name}</p>}
+						<div>
+							<label className={error.name && s.errorLabel} htmlFor="" >Name: </label>
+							<input onChange={handleInputChange}
+										 value={input.name} 
+										 type="text" 
+										 placeholder='Name your Pokemon'
+										 name='name'
+										 className={error.name && s.error}
+							/>
+							{error.name && <p className={s.errorLabel}>{error.name}</p>}
+						</div>
+						<div>
+							<label className={error.life && s.errorLabel} htmlFor=""  >Life: </label>
+							<input onChange={handleInputChange}
+									value={input.life}
+									type="number" 
+									min='1' 
+									max='100' 
+									placeholder='60'
+									name='life'
+									className={error.life && s.error}
+							/>
+							{error.life && <p className={s.errorLabel}>{error.life}</p>}
+						</div>
+						<div>
+							<label className={error.speed && s.errorLabel} htmlFor="" >Speed: </label>
+							<input onChange={handleInputChange}
+									value={input.speed}
+									type="number" 
+									min='1' 
+									max='100' 
+									placeholder='40'
+									name='speed'
+									className={error.speed && s.error}
+							/>
+							{error.speed && <p className={s.errorLabel}>{error.speed}</p>}
+						</div>
+						<div>
+							<label className={error.attack && s.errorLabel} htmlFor="" >Attack: </label>
+							<input onChange={handleInputChange}
+										 value={input.attack}
+							 			 type="number" 
+							 			 min='1' 
+							 			 max='150' 
+							 			 placeholder='65'
+							 			 name='attack'
+							 			 className={error.attack && s.error}
+							/>
+							{error.attack && <p className={s.errorLabel}>{error.attack}</p>}
+						</div>
+						<div>
+							<label className={error.height && s.errorLabel} htmlFor="" >Height: </label>
+							<input onChange={handleInputChange}
+										 value={input.height}
+										 type="number" 
+										 min='1' 
+										 max='500' 
+										 placeholder='25'
+										 name='height'
+										 className={error.height && s.error}
+							/>
+							{error.height && <p className={s.errorLabel}>{error.height}</p>}
+						</div>
+						<div>
+							<label className={error.defense && s.errorLabel} htmlFor="" >Defense: </label>
+							<input onChange={handleInputChange}
+										 value={input.defense}
+										 type="number" 
+										 min='1' 
+										 max='100' 
+										 placeholder='70'
+										 name='defense'
+										 className={error.defense && s.error}
+							/>
+							{error.defense && <p className={s.errorLabel}>{error.defense}</p>}
+						</div>
+						<div>
+							<label className={error.weight && s.errorLabel} htmlFor="" >Weight: </label>
+							<input onChange={handleInputChange}
+										 value={input.weight}
+							 			 type="number" 
+							 			 min='1' 
+							 			 max='1000' 
+							 			 placeholder='40'
+							 			 name='weight'
+							 			 className={error.weight && s.error}
+							/>
+							{error.weight && <p className={s.errorLabel}>{error.weight}</p>}
+						</div>
+						
 
-						<label className={error.life && s.errorLabel} htmlFor=""  >Life: </label>
-						<input onChange={handleInputChange}
-									 value={input.life}
-									 type="number" 
-									 min='1' 
-									 max='100' 
-									 placeholder='60'
-									 name='life'
-									 className={error.life && s.error}
-						/>
-						{error.life && <p className={s.errorLabel}>{error.life}</p>}
-
-						<label className={error.speed && s.errorLabel} htmlFor="" >Speed: </label>
-						<input onChange={handleInputChange}
-									 value={input.speed}
-									 type="number" 
-									 min='1' 
-									 max='100' 
-									 placeholder='40'
-									 name='speed'
-									 className={error.speed && s.error}
-						/>
-						{error.speed && <p className={s.errorLabel}>{error.speed}</p>}
-
-						<label className={error.attack && s.errorLabel} htmlFor="" >Attack: </label>
-						<input onChange={handleInputChange}
-									 value={input.attack}
-						 			 type="number" 
-						 			 min='1' 
-						 			 max='150' 
-						 			 placeholder='65'
-						 			 name='attack'
-						 			 className={error.attack && s.error}
-						/>
-						{error.attack && <p className={s.errorLabel}>{error.attack}</p>}
-
-						<label className={error.height && s.errorLabel} htmlFor="" >Height: </label>
-						<input onChange={handleInputChange}
-									 value={input.height}
-									 type="number" 
-									 min='1' 
-									 max='500' 
-									 placeholder='25'
-									 name='height'
-									 className={error.height && s.error}
-						/>
-						{error.height && <p className={s.errorLabel}>{error.height}</p>}
-
-						<label className={error.defense && s.errorLabel} htmlFor="" >Defense: </label>
-						<input onChange={handleInputChange}
-									 value={input.defense}
-									 type="number" 
-									 min='1' 
-									 max='100' 
-									 placeholder='70'
-									 name='defense'
-									 className={error.defense && s.error}
-						/>
-						{error.defense && <p className={s.errorLabel}>{error.defense}</p>}
-
-						<label className={error.weight && s.errorLabel} htmlFor="" >Weight: </label>
-						<input onChange={handleInputChange}
-									 value={input.weight}
-						 			 type="number" 
-						 			 min='1' 
-						 			 max='1000' 
-						 			 placeholder='40'
-						 			 name='weight'
-						 			 className={error.weight && s.error}
-						/>
-						{error.weight && <p className={s.errorLabel}>{error.weight}</p>}
-
-						<label className={error.image && s.errorLabel} htmlFor="" >Image: </label>
-						<input onChange={handleInputChange}
-						 				value={input.image}
-						 			  type="text"
-						 			  placeholder='http://yourimage.com/image.jpg or png'
-						 			  name='image'
-						 			  className={error.image && s.error}
-						/>
-						{error.image && <p className={s.errorLabel}>{error.image}</p>}
-
-						<button className={ createBtn ? s.buttonDisabled : s.buttonEnabled } type='submit'>Create Pokemon</button>
+						
 					</div>
 					<div className={s.types}>
 						<label className={error.types && s.errorLabel} htmlFor="" >Types: </label>
 						<div>
 							{types?.map( t  => 
-								<p><input onChange={addOrDeleteType}
+								<p id={t.name}><input onChange={addOrDeleteType}
+												  
 												  type="checkbox" 
 												  value={t.name} 
 												  name='types'
@@ -268,6 +307,19 @@ export default function Form() {
 							)}
 						</div>
 						{error.types && <p className={s.errorLabel}>{error.types}</p>}
+						<div className={s.notification}>
+							{ Object.keys(msgPokemonCreated).length === 0 ? null :  msgPokemonCreated.toString()  }
+						</div>
+					</div>
+					<div className={s.previewCard}>
+						<div>
+							<Card 
+								image={input.image}
+								name={input.name}
+								types={showTypesPreview()}
+								/>
+						</div>
+						<button className={ createBtn ? s.buttonDisabled : s.buttonEnabled } type='submit'>Create Pokemon</button>
 					</div>
 				</form>
 			</div>
