@@ -1,62 +1,219 @@
 form{
 	display: grid;
-	grid-template-columns: 1fr 1fr;
-	border: 1px solid black;
+	grid-template-columns: 1fr 1fr 1fr;
+	height: 100vh;
+}
+
+/* LEFT */
+label{
+	margin-top: 1rem;
+	text-align: center;
 }
 
 .inputs{
 	width: 100%;
-	border: 1px solid black;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding-top: 4rem;
+	position: relative;
+	top: 0rem;
+	height: auto;
+	padding-bottom: 2rem;
 }
 
-.types{
+.inputs div{
 	display: flex;
 	flex-direction: column;
-	flex-wrap: wrap;
+	height: 5rem;
+	margin-bottom: 1rem;
+}
+
+.inputs div label{
+	font-size: 1.3rem;
+	text-align: left;
+	position: relative;
+	top: 2rem;
+	width: 4rem;
+}
+
+.inputs input{
+	width: 15rem;
+	height: 1.5rem;
+	padding: .2rem 4rem;
+	text-align: center;
+	background-color: gray;
+	border: none;
+	border-bottom: .2rem solid white;
+	outline: none;
+	color: white;
+	font-size: 1.3rem;
+}
+
+
+/* CENTER */
+
+.types{
 	width: 100%;
-	border: 1px solid black;
-	padding: 3rem 0;
+	height: 33rem;
+	background-color: #E1E1E1;
+	border-radius: 1rem;
+	margin-left: 2rem;
+	padding-top: 3rem;
+	margin-top: 4.5rem;
+	box-shadow: 0 0 4rem -1rem;
 }
 
 .types div{
 	display: flex;
 	flex-wrap: wrap;
+	padding: 0 1rem;
 }
 
 .types p{
 	width: auto;
 	font-size: 1.2rem;
+	color: white;
+	box-shadow: 0 0 1rem -.2rem black;
+	border-radius: .5rem;
 }
 
 .types input{
-	width: 10rem;
+	width: 6rem;
 	display: flex;
-	/* align-items: center; */
+}
 
+.types p[id="normal"]{
+	background-color: gray;
+}
+
+.types p[id="flying"]{
+	background-image: linear-gradient(180deg, #3DC7EF, #BDB9B8);
+}
+
+.types p[id="fighting"]{
+	background-color: #D56723;
+}
+
+.types p[id="poison"]{
+	background-color: #B97FC9;
+}
+
+.types p[id="ground"]{
+	background-color: brown;
+}
+
+.types p[id="rock"]{
+	background-color: #A38C21;
+}
+
+.types p[id="bug"]{
+	background-color: #729F3F;
+}
+
+.types p[id="ghost"]{
+	background-color: #7B62A3;
+}
+
+.types p[id="steel"]{
+	background-color: #9EB7B8;
+}
+
+.types p[id="fire"]{
+	background-color: #FD7D24;
+}
+
+.types p[id="water"]{
+	background-color: #4592C4;
+}
+
+.types p[id="grass"]{
+	background-color: #9BCC50;
+}
+
+.types p[id="ice"]{
+	background-color: #51C4E7;
+}
+
+.types p[id="electric"]{
+	background-color: #EED535;
+	color: black;
+}
+
+.types p[id="psychic"]{
+	background-color: #F366B9;
+}
+
+.types p[id="dragon"]{
+	background-image: linear-gradient(180deg, #53A4CF, #F16E57);
+}
+
+.types p[id="dark"]{
+	background-color: #707070;
+}
+
+.types p[id="fairy"]{
+	background-color: #FDB9E9;
+	color: black;
+}
+
+.types p[id="shadow"]{
+	background-color: #343435;
+}
+
+.types p[id="unknown"]{
+	background-color: gray;
+}
+
+
+/* RIGHT */
+.previewCard{
+	margin: 0 auto;
+	padding-top: 4.3rem;
+	height: 40rem;
 }
 
 .buttonEnabled{
 	display: block;
-	background-color: green;
+	background-color: #009000;
 	cursor: pointer;
+	width: 15rem;
+	height: 4rem;
+	font-size: 1.5rem;
+	border-radius: 3rem;
+	border: none;
+	margin: 0 auto;
+	color: white;
+	position: relative;
+	bottom: 2.5rem;
+	transition: all .3s ease;
+}
+
+.buttonEnabled:hover{
+	background-color: #005000;
 }
 
 .buttonDisabled{
 	display: none;
-	background-color: red;
 }
+
 
 /* ERRORS */
 
 .errorLabel{
-	color: red;
+	color: #A20000 !important; 
 }
 
 .error{
-	border: .1rem solid red;
-	color: red;
+	color: #A20000;
+}
+
+/* NOTIFICATION */
+.notification{
+	margin-left: 4rem;
+	margin-top: 1.5rem;
+	font-size: 1.5rem;
+	background-color: green;
+	color: white;
+	border-top-left-radius: .5rem;
+	border-bottom-left-radius: .5rem;
 }
