@@ -9,9 +9,9 @@ function App() {
   return (
     <div className="App">
       <Route exact path="/" component={Landing} />
-      <Route path='/home' component={Home} />
-      <Route path='/detail/:id' component={PokemonDetail} />
-      <Route path='/createpokemon' component={Form} />
+      <Route exact path='/home' component={Home} />
+      <Route exact path='/detail/:id' component={PokemonDetail} />
+      <Route exact path='/createpokemon' component={Form} />
     </div>
   );
 }
