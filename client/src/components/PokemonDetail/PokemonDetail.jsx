@@ -59,7 +59,7 @@ export default function PokemonDetail() {
 						</div>
 					</div>
 					<div className={s.types}>
-					{pokemonDetail.types?.map(t => (
+					{pokemonDetail.types?.slice(0,4).map(t => (
 						<p className={s.typeTextDetail} id={t.name}>{t.name}</p>
 					))}
 					</div>
