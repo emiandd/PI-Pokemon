@@ -9,7 +9,8 @@ import { GET_ALL_POKEMONS,
 		 CREATE_NEW_POKEMON,
 		 RESET_DETAIL,
 		 RESET_CARDS,
-		 LOADER } from './actions.js';
+		 LOADER,
+		 RESET_FORM } from './actions.js';
 
 const initialState = {
 	allPokemons: [],
@@ -53,7 +54,7 @@ export default function reducer(state = initialState, action){
 
 		case FILTERED_BY_TYPE:
 			if(action.payload.length === 0){
-				alert('No se encontraron resultados');
+				alert('No results found');
 				return state;
 			}
 			return{
@@ -63,7 +64,7 @@ export default function reducer(state = initialState, action){
 
 		case FILTERED_BY_DB_OR_API:
 			if(action.payload.length === 0){
-				alert('No se encontraron resultados');
+				alert('No results found');
 				return state;
 			}
 			return{
@@ -84,6 +85,10 @@ export default function reducer(state = initialState, action){
 			}
 
 		case CREATE_NEW_POKEMON:
+			if(action.payload.error){
+				alert(action.payload.error);
+				return state;
+			}
 			return{
 				...state,
 				newPokemon: action.payload
@@ -105,6 +110,12 @@ export default function reducer(state = initialState, action){
 			return{
 				...state,
 				loader: action.payload
+			}
+
+		case RESET_FORM:
+			return{
+				...state,
+				newPokemon: action.payload
 			}
 
 		default:
