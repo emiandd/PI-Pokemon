@@ -10,9 +10,9 @@ router.get('/types', async (req, res) => {
 
 
 	try {
-		res.send(await model.getAllTypes());
+		return res.send(await model.getAllTypes());
 	} catch(e) {
-		res.status(404).send(e)
+		return res.status(404).send({error:e})
 	}
 })
 
