@@ -10,6 +10,7 @@ export const CREATE_NEW_POKEMON = 'CREATE_NEW_POKEMON';
 export const RESET_DETAIL = 'RESET_DETAIL';
 export const RESET_CARDS = 'RESET_CARDS';
 export const LOADER = 'LOADER';
+export const RESET_FORM = 'RESET_FORM';
 
 export function getAllPokemons(){
 
@@ -200,6 +201,7 @@ export function createNewPokemon(obj){
 				dispatch({type: CREATE_NEW_POKEMON, payload: data })
 			})
 
+
 	}
 
 }
@@ -210,4 +212,8 @@ export function resetDetail(){
 
 export function resetCards(){
 	return { type: RESET_CARDS, payload: [] }
+}
+
+export function resetForm(){
+	return { type: RESET_FORM, payload: {} }
 }
