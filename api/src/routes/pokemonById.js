@@ -8,10 +8,10 @@ router.get('/pokemons/:id', async (req, res) => {
 
 	try {
 		// statements
-		res.send(await model.getPokemonById(id));	
+		return res.send(await model.getPokemonById(id));	
 	} catch(e) {
 		// statements
-		res.status(404).json({error:'El pokemon que intentas buscar no existe'});
+		return res.status(404).json({error:'The pokemon you are trying to find does not exist'});
 	}
 
 })
