@@ -16,7 +16,7 @@ router.get('/pokemons', async (req, res) => {
 
 
 	} catch(e) {
-		res.status(404).json({error:'El pokemon que intentas buscar no existe'});
+		res.status(404).json({error:'The pokemon you are trying to find does not exist'});
 	}
 
 })
