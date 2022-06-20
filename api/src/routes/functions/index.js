@@ -124,8 +124,8 @@ async function createNewPokemon(obj){
 
 	await axios.get('http://localhost:3001/types');
 
-	if(!name || !life || !attack || !defense || !speed || !height || !weight || !image || !types){
-		throw 'Faltan datos para poder crear un nuevo Pokemon!';
+	if(!name || !life || !attack || !defense || !speed || !height || !weight || !image || types.length === 0){
+		throw 'Missing data to create a new Pokemon!';
 	}
 
 	let typesDB = types.map( type => {
@@ -146,7 +146,7 @@ async function createNewPokemon(obj){
 
 	newPokemon.addType(idTypes);
 
-	return 'Nuevo Pokemon creado exitosamente!';
+	return 'New Pokemon Created Successfully!';
 		
 }
 
