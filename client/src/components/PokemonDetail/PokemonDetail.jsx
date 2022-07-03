@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar/Navbar.jsx';
 import Loader from '../Loader/Loader.jsx'
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getDetailPokemon, resetDetail } from '../../redux/actions.js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+
 import s from './PokemonDetail.module.css';
 
 export default function PokemonDetail() {
@@ -30,7 +34,15 @@ export default function PokemonDetail() {
 			{loader ? <Loader /> 
 			: <div className={s.detailContainer}>
 				<div className={s.detailLeft}>
-					<img src={pokemonDetail.image} alt={`${pokemonDetail.name} image`} />
+					<div className={s.imgContainer}>
+						<img src={pokemonDetail.image} alt={`${pokemonDetail.name} image`} />
+					</div>
+					<div className={ id.length > 10 ? s.editOrDeleteContainer : s.displayNone}>
+						<Link to={`/detail/edit/${id}`}>
+							<FontAwesomeIcon className={s.pencilIcon} icon={faPencil} />
+						</Link>	
+							<FontAwesomeIcon className={s.closeIcon} icon={faXmark} />
+					</div>
 				</div>
 				<div className={s.detailRight}>
 					<h1>{pokemonDetail.name}</h1>

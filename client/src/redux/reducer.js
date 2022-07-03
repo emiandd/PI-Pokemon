@@ -10,7 +10,9 @@ import { GET_ALL_POKEMONS,
 		 RESET_DETAIL,
 		 RESET_CARDS,
 		 LOADER,
-		 RESET_FORM } from './actions.js';
+		 RESET_FORM,
+		 UPDATE_POKEMON,
+		 RESET_FORM_UPDATE } from './actions.js';
 
 const initialState = {
 	allPokemons: [],
@@ -19,6 +21,7 @@ const initialState = {
 	allTypes: [],
 	newPokemon: {},
 	loader: false,
+	pokemonUpdated: {}
 }
 
 export default function reducer(state = initialState, action){
@@ -116,6 +119,22 @@ export default function reducer(state = initialState, action){
 			return{
 				...state,
 				newPokemon: action.payload
+			}
+
+		case UPDATE_POKEMON:
+			if(action.payload.error){
+				alert(action.payload.error);
+				return state;
+			}
+			return{
+				...state,
+				pokemonUpdated: action.payload
+			}
+
+		case RESET_FORM_UPDATE:
+			return{
+				...state,
+				pokemonUpdated: action.payload
 			}
 
 		default:

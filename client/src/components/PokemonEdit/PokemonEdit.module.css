@@ -1,0 +1,94 @@
+.formContainer{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 90vh;
+}
+
+.formEdit{
+	padding-top: 1.5rem;
+	background-color: #E1E1E1;
+	border-radius: 1rem;
+	box-shadow: 0 0 2rem -1rem;
+	width: 25rem;
+	height: 32rem;
+	display: flex;
+	flex-direction: column;
+}
+
+
+.inputs div{
+	height: 3.5rem;
+}
+
+.inputs div p{
+	margin: 0;
+	padding-left: 2.65rem;
+	text-align: left;
+}
+
+.inputs input{
+	width: 20rem;
+	height: 2rem;
+	background-color: rgb(0 0 0 / 0);
+	border: none;
+	border-bottom: .2rem solid grey;
+	font-size: 1.2rem;
+	outline: none;
+	color: grey;
+}
+
+.buttons{
+	display: flex;
+	justify-content: space-evenly;
+	margin-top: .6rem;
+}
+
+.buttons button{
+	border: none;
+	padding: .6rem 1.3rem;
+	color: white;
+	font-size: 1rem;
+	border-radius: .2rem;
+	width: 9rem;
+}
+
+#btnCancel{
+	background-color: #808080;
+}
+
+#btnCancel:hover{
+	background-color: #404040;
+	cursor: pointer;
+}
+
+#btnUpdate{
+	background-color: green;
+}
+
+#btnUpdate:hover{
+	background-color: #005000;
+	cursor: pointer;
+	
+}
+
+.notification{
+	background-color: #E1E1E1;
+	color: white;
+	font-size: 1.3rem;
+	padding: .5rem 0;
+	height: 1.6rem;
+}
+
+.notification[id="Successfully updated pokemon"]{
+	background-color: green;
+}
+
+.displayNone{
+	opacity: 0;
+	cursor: default;
+}
+
+.error{
+	color: red;
+}

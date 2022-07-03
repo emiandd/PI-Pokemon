@@ -9,44 +9,45 @@ label{
 	margin-top: 1rem;
 	text-align: center;
 }
-
+ 
 .inputs{
-	width: 100%;
+	padding-top: 1.5rem;
+	background-color: #E1E1E1;
+	border-radius: 1rem;
+	box-shadow: 0 0 2rem -1rem;
+	width: 25rem;
+	height: 34rem;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	position: relative;
-	top: 0rem;
-	height: auto;
-	padding-bottom: 2rem;
+	top: 1.6rem;
+	left: 2.4rem;
 }
 
 .inputs div{
 	display: flex;
 	flex-direction: column;
 	height: 5rem;
-	margin-bottom: 1rem;
 }
 
-.inputs div label{
-	font-size: 1.3rem;
-	text-align: left;
-	position: relative;
-	top: 2rem;
-	width: 4rem;
-}
+
 
 .inputs input{
-	width: 15rem;
+	width: 19rem;
 	height: 1.5rem;
-	padding: .2rem 4rem;
-	text-align: center;
-	background-color: gray;
+	padding: .2rem 1rem;
+	text-align: left;
+	background-color: #E1E1E1;
 	border: none;
-	border-bottom: .2rem solid white;
+	border-bottom: .2rem solid grey;
 	outline: none;
-	color: white;
+	color: grey;
 	font-size: 1.3rem;
+	margin-left: 2rem;
+}
+
+.inputs div p{
+	margin: 0;
 }
 
 
@@ -57,24 +58,27 @@ label{
 	height: 33rem;
 	background-color: #E1E1E1;
 	border-radius: 1rem;
-	margin-left: 2rem;
-	padding-top: 3rem;
-	margin-top: 4.5rem;
-	box-shadow: 0 0 4rem -1rem;
+	margin-left: 1.6rem;
+	padding-top: 2rem;
+	margin-top: 1.6rem;
+	box-shadow: 0 0 2rem -1rem;
 }
 
 .types div{
 	display: flex;
 	flex-wrap: wrap;
-	padding: 0 1rem;
+	padding: 0 2rem;
 }
 
 .types p{
-	width: auto;
+	width: 6rem;
 	font-size: 1.2rem;
 	color: white;
-	box-shadow: 0 0 1rem -.2rem black;
-	border-radius: .5rem;
+	box-shadow: 0 0 1rem -.5rem black;
+	border-radius: .3rem;
+	margin: 0;
+	margin-right: 1rem;
+	margin-bottom: 1rem;
 }
 
 .types input{
@@ -168,7 +172,7 @@ label{
 /* RIGHT */
 .previewCard{
 	margin: 0 auto;
-	padding-top: 4.3rem;
+	padding-top: 1.6rem;
 	height: 40rem;
 }
 
@@ -179,7 +183,7 @@ label{
 	width: 15rem;
 	height: 4rem;
 	font-size: 1.5rem;
-	border-radius: 3rem;
+	border-radius: .4rem;
 	border: none;
 	margin: 0 auto;
 	color: white;

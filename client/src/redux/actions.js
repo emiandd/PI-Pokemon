@@ -11,10 +11,12 @@ export const RESET_DETAIL = 'RESET_DETAIL';
 export const RESET_CARDS = 'RESET_CARDS';
 export const LOADER = 'LOADER';
 export const RESET_FORM = 'RESET_FORM';
+export const UPDATE_POKEMON = 'UPDATE_POKEMON';
+export const RESET_FORM_UPDATE = 'RESET_FORM_UPDATE';
 
 export function getAllPokemons(){
 
-	const url = 'http://localhost:3001/pokemons';
+	const url = `http://localhost:3001/pokemons`;
 
 	return async function(dispatch){
 		dispatch({type: LOADER, payload: true})
@@ -184,7 +186,7 @@ export function sortByName(value){
 }
 
 export function createNewPokemon(obj){
-	console.log('creando nuevo pokemon');
+
 	const url = `http://localhost:3001/pokemons`;
 	const options = {
 		method: 'POST',
@@ -197,13 +199,9 @@ export function createNewPokemon(obj){
 		return await fetch(url, options)
 			.then( response => response.json() )
 			.then( data => {
-				console.log(data);
 				dispatch({type: CREATE_NEW_POKEMON, payload: data })
 			})
-
-
 	}
-
 }
 
 export function resetDetail(){
@@ -216,4 +214,27 @@ export function resetCards(){
 
 export function resetForm(){
 	return { type: RESET_FORM, payload: {} }
+}
+
+export function updatePokemon(id, obj){
+
+	const url = `http://localhost:3001/pokemons/${id}`;
+
+	const options = {
+		method: 'PUT',
+		headers: {'Content-Type' : 'Application/json'},
+		body: JSON.stringify(obj)
+	}
+	return async function(dispatch){
+
+		return await fetch(url, options)
+			.then( response => response.json() )
+			.then( data => {
+				dispatch({type: UPDATE_POKEMON, payload: data })
+			})
+	}
+}
+
+export function resetFormUpdate(){
+	return { type: RESET_FORM_UPDATE, payload: {} }
 }

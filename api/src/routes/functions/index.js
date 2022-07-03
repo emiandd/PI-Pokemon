@@ -122,8 +122,6 @@ async function createNewPokemon(obj){
 
 	const { name, life, attack, defense, speed, height, weight, image, types } = obj;
 
-	await axios.get('http://localhost:3001/types');
-
 	if(!name || !life || !attack || !defense || !speed || !height || !weight || !image || types.length === 0){
 		throw 'Missing data to create a new Pokemon!';
 	}
@@ -150,6 +148,40 @@ async function createNewPokemon(obj){
 		
 }
 
+async function updatePokemon(id, obj){
+
+	const { name, life, attack, defense, speed, height, weight } = obj;
+
+	if(!name || !life || !attack || !defense || !speed || !height || !weight){
+		throw 'It is not allowed to update fields without information';
+	}
+
+	if(id.length > 10){
+
+		const pToUpdate = await Pokemon.findByPk(id);	
+
+		if(pToUpdate){
+			let newValues = {
+				name: name,
+				life: life,
+				attack: attack,
+				defense: defense,
+				speed: speed,
+				height: height,
+				weight: weight
+			}
+
+			Pokemon.update(newValues, {
+				where: {id}
+			})
+
+			return 'Successfully updated pokemon';
+		}else{
+			throw 'Pokemon not found';
+		}
+	}
+}
+
 
 
 module.exports = {
@@ -157,5 +189,6 @@ module.exports = {
 	getPokemonById,
 	getPokemonByName,
 	getAllTypes,
-	createNewPokemon
+	createNewPokemon,
+	updatePokemon
 }

@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import Navbar from '../Navbar/Navbar.jsx';
-import Card from '../Card/Card.jsx';
-import { useSelector, useDispatch } from 'react-redux';
-import { createNewPokemon, getTypes, resetForm } from '../../redux/actions.js';
-import s from './Form.module.css';
+import { useParams, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { updatePokemon, resetFormUpdate } from '../../redux/actions.js';
+import s from './PokemonEdit.module.css';
 
-
-
-function validation(input){
+function validate(input){
 
 	let error = {};
+
 	let regex = {
 		name: /^[\w -]+$/,
-		specialC: /^([0-9]{2}(\.\d{1,2})?)|$/,
+		specialC: /\D/,
 		url: /^(?:(?:(?:https?|ftp):)?\/\/)(?:\S+(?::\S*)?@)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:[/?#]\S*)?$/i
 	}
 
-	
 
 	if(!input.name){
 		error.name = 'Name is required';
+	}else if(input.name.length > 20){
+		error.name = 'Name cannot be very long';
 	}else if(!regex.name.test(input.name)){
 		error.name = 'Invalid name'
 	}
 
 	if(!input.life){
 		error.life = 'Life is required';
-	}else if(!regex.specialC.test(input.life)){
+	}else if(regex.specialC.test(input.life)){
 		error.life = 'Special characters are not allowed';
 	}else if(input.life < 1 || input.life > 100){
 		error.life = 'Only numbers between the range of 1 to 100 are allowed';
@@ -34,7 +34,7 @@ function validation(input){
 
 	if(!input.speed){
 		error.speed = 'Speed is required';
-	}else if(!regex.specialC.test(input.speed)){
+	}else if(regex.specialC.test(input.speed)){
 		error.speed = 'Special characters are not allowed';
 	}else if(input.speed < 1 || input.speed > 100){
 		error.speed = 'Only numbers between the range of 1 to 100 are allowed';
@@ -42,7 +42,7 @@ function validation(input){
 
 	if(!input.attack){
 		error.attack = 'Attack is required';
-	}else if(!regex.specialC.test(input.attack)){
+	}else if(regex.specialC.test(input.attack)){
 		error.attack = 'Special characters are not allowed';
 	}else if(input.attack < 1 || input.attack > 150){
 		error.attack = 'Only numbers between the range of 1 to 150 are allowed';
@@ -50,7 +50,7 @@ function validation(input){
 
 	if(!input.height){
 		error.height = 'Height is required';
-	}else if(!regex.specialC.test(input.height)){
+	}else if(regex.specialC.test(input.height)){
 		error.height = 'Special characters are not allowed';
 	}else if(input.height < 1 || input.height > 500){
 		error.height = 'Only numbers between the range of 1 to 500 are allowed';
@@ -58,7 +58,7 @@ function validation(input){
 
 	if(!input.defense){
 		error.defense = 'Defense is required';
-	}else if(!regex.specialC.test(input.defense)){
+	}else if(regex.specialC.test(input.defense)){
 		error.defense = 'Special characters are not allowed';
 	}else if(input.defense < 1 || input.defense > 100){
 		error.defense = 'Only numbers between the range of 1 to 100 are allowed';
@@ -66,97 +66,54 @@ function validation(input){
 
 	if(!input.weight){
 		error.weight = 'Weight is required';
-	}else if(!regex.specialC.test(input.weight)){
+	}else if(regex.specialC.test(input.weight)){
 		error.weight = 'Special characters are not allowed';
 	}else if(input.weight < 1 || input.weight > 1000){
 		error.weight = 'Only numbers between the range of 1 to 1000 are allowed';
-	}
-
-	if(!input.image){
-		error.image = 'Image is required';
-	}else if(!regex.url.test(input.image)){
-		error.image = 'Only image URL format allowed';
-	}
-
-	if(input.types.length === 0){
-		error.types = 'Select at least one type. Max 4';
 	}
 
 	return error;
 
 }
 
-export default function Form() {
-
-	const types = useSelector( state => state.allTypes );
-	const msgPokemonCreated = useSelector( state => state.newPokemon);
-	// console.log(typeof msgPokemonCreated);
-
+export default function PokemonEdit() {
+	const { id } = useParams();
 	const dispatch = useDispatch();
+	const msgPokemonUpdated = useSelector( state => state.pokemonUpdated);
+	
 
-	const [createBtn, setCreateBtn] = useState(true);
-	const [error, setError]	= useState({})
-	const [input, setInput] = useState({
+	const [ input, setInput ] = useState({
 		name: '',
 		life: '',
 		speed: '',
 		attack: '',
 		height: '',
 		defense: '',
-		weight: '',
-		image: '',
-		types: []
-	});
+		weight: ''
+	})
 
-	useEffect( () => {
-		if(error.name ||
-			 error.life || 
-			 error.speed ||
-			 error.attack || 
-			 error.height ||
-			 error.defense || 
-			 error.weight || 
-			 error.image || 
-			 error.types){
-			setCreateBtn(true)
-		}else{
-			setCreateBtn(false)
-		}
+	const [ error, setError ] = useState({});
 
+	useEffect(() => {
 		return () => {
-			dispatch(resetForm());
-		}
-	},[error, input]);
+			dispatch(resetFormUpdate());
+		};
+	}, [input, error])
 
-	// console.log(input);
-	
 	function handleInputChange(e){
-		e.preventDefault()
-		// console.log(e.target.value);
-		setInput({
-			...input,
+		e.preventDefault();
+		setInput({...input,
 			[e.target.name]: e.target.value
 		})
 
-		setError(validation({...input,
-		  [e.target.name]: e.target.value}))
+		setError(validate({...input,
+			[e.target.name]: e.target.value
+		}))
 	}
 
-	function addOrDeleteType(e){
-		// const array = [];
-		setInput({
-			...input,
-			[e.target.name]: !input.types.includes(e.target.value) ? [...input.types, e.target.value] : input.types.filter( t => t !== e.target.value )
-		})
-
-		setError(validation({...input,
-			[e.target.name]: [e.target.value]}))
-	}										
-
 	function handleSubmit(e){
-		// console.log('enviando información');
-		e.preventDefault()
-		dispatch(createNewPokemon(input))
+		e.preventDefault();
+		dispatch(updatePokemon(id, input));
 		setInput({
 			name: '',
 			life: '',
@@ -164,42 +121,16 @@ export default function Form() {
 			attack: '',
 			height: '',
 			defense: '',
-			weight: '',
-			image: '',
-			types: []
+			weight: ''
 		})
 	}
-
-	function showTypesPreview(){
-
-		let typeObject = input.types.map( t => {
-			let obj = {
-				name: t
-			}
-			return obj;
-		})
-		return typeObject;
-	}
-
-	// console.log(showTypesPreview());
 
 	return (
 		<div>
 			<Navbar />
-			<div>
-				<form onSubmit={ (e) => handleSubmit(e)}>
+			<div className={s.formContainer}>
+				<form 	onSubmit={(e) => handleSubmit(e)} className={s.formEdit}>
 					<div className={s.inputs}>
-						
-						<div>
-							<input onChange={handleInputChange}
-							 				value={input.image}
-							 			  type="text"
-							 			  placeholder='http://yourimage.com/image.jpg or png'
-							 			  name='image'
-							 			  className={error.image && s.error}
-							/>
-							{error.image && <p className={s.error}>{error.image}</p>}
-						</div>
 						<div>
 							<input 
 								value={input.name}
@@ -285,37 +216,21 @@ export default function Form() {
 							/>
 							{error.weight && <p className={s.error}>{error.weight}</p>}
 						</div>
-						
-
-						
 					</div>
-					<div className={s.types}>
-						<label className={error.types && s.errorLabel} htmlFor="" >Types: </label>
+					<div className={s.notification} id={msgPokemonUpdated.toString()}>
+						{ Object.entries(msgPokemonUpdated).length === 0 ? null : msgPokemonUpdated.toString() }
+					</div>
+					<div className={s.buttons}>
 						<div>
-							{types?.map( t  => 
-								<p id={t.name}><input onChange={addOrDeleteType}
-												  
-												  type="checkbox" 
-												  value={t.name} 
-												  name='types'
-												  className={error.types && s.error}/>{t.name}</p>
-							)}
+							<Link to={`/detail/${id}`}>
+								<button id={s.btnCancel}>{ Object.entries(msgPokemonUpdated).length === 0 || msgPokemonUpdated.error ? 'Cancel' : 'See Changes' }</button>
+							</Link>
 						</div>
-						{error.types && <p className={s.errorLabel}>{error.types}</p>}
-						<div className={s.notification}>
-							{ Object.keys(msgPokemonCreated).length === 0 ? null :  msgPokemonCreated.toString()  }
-						</div>
-					</div>
-					<div className={s.previewCard}>
 						<div>
-							<Card 
-								image={input.image}
-								name={input.name}
-								types={showTypesPreview()}
-								/>
+							<button id={s.btnUpdate} type='submit' className={ Object.entries(msgPokemonUpdated).length === 0 ? null : s.displayNone }>Update</button>
 						</div>
-						<button className={ createBtn ? s.buttonDisabled : s.buttonEnabled } type='submit'>Create Pokemon</button>
 					</div>
+					
 				</form>
 			</div>
 		</div>

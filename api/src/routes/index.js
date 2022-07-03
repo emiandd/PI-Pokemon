@@ -5,6 +5,8 @@ const allPokemons = require('./pokemons.js');
 const pokemonById = require('./pokemonById.js');
 const types = require('./types.js');
 const createPokemon = require('./createPokemon.js');
+const updatePokemon = require('./updatePokemon.js');
+
 
 const router = Router();
 
@@ -15,6 +17,8 @@ router.use('/', allPokemons);
 router.use('/', pokemonById);
 router.use('/', types);
 router.use('/', createPokemon);
+router.use('/', updatePokemon);
+
 
 
 module.exports = router;
